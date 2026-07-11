@@ -47,6 +47,7 @@ Powers are created through a phased onboarding process:
 
 See the [JavaParser power](./javaparser-contributor/) as a reference implementation.
 Reusable prompts for onboarding Kiro to any project are in [ONBOARDING_PROMPTS.md](./ONBOARDING_PROMPTS.md).
+Quality assurance methodology for validating Powers is in [QUALITY_ASSURANCE.md](./QUALITY_ASSURANCE.md).
 
 ## Contributing
 
