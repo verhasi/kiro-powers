@@ -46,6 +46,36 @@ Powers are created through a phased onboarding process:
 - **Phase 3:** Community validation and publication
 
 See the [JavaParser power](./javaparser-contributor/) as a reference implementation.
+Reusable prompts for onboarding Kiro to any project are in [ONBOARDING_PROMPTS.md](./ONBOARDING_PROMPTS.md).
+
+## Contributing
+
+We welcome contributions! You can help by:
+
+### Adding a new Power for a project you maintain or contribute to
+
+1. Fork this repository
+2. Create a folder for your project: `<project-name>/`
+3. Use the [onboarding prompts](./ONBOARDING_PROMPTS.md) or follow the [JavaParser power](./javaparser-contributor/) as a template
+4. At minimum include `POWER.md` with frontmatter and core principles
+5. Add `steering/` files for on-demand knowledge modules
+6. Submit a pull request with a description of the project and your relationship to it
+
+### Improving an existing Power
+
+1. Fork this repository
+2. Make changes to the relevant power's files
+3. Explain what patterns you're adding and the evidence source (PR, documentation, maintainer feedback)
+4. Submit a pull request
+
+### Reporting issues or suggesting improvements
+
+Use [GitHub Issues](https://github.com/verhasi/kiro-powers/issues) for:
+- Incorrect or outdated patterns in existing Powers
+- Suggestions for new Powers
+- Methodology improvements
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 
 ## License
 
