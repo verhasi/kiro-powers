@@ -10,6 +10,10 @@ This means creating a structured steering documentation system that captures pro
 patterns, and culture - similar to how a human newcomer reads docs, studies PRs, and internalizes 
 "how things are done here."
 
+The end goal is a Kiro Power (https://kiro.dev/docs/powers/create/) that can be installed
+by any contributor. The intermediate deliverable is a modular steering system stored in 
+.kiro/steering/ that can later be packaged as a Power using Prompt 6.
+
 The goal is a modular memory system stored in .kiro/steering/ with:
 1. core-principles.md (always loaded - non-negotiable rules)
 2. quick-reference.md (always loaded - common scenarios with step-by-step guidance)
@@ -110,6 +114,45 @@ Read the current steering modules in .kiro/steering/, then:
 4. Update affected modules with corrections or new patterns
 5. Log changes in the module version headers
 6. If major changes, re-run usability test with a fresh scenario
+```
+
+## Prompt 6: Package as Kiro Power
+
+```
+Convert the [PROJECT_NAME] steering system into a publishable Kiro Power.
+Read the current .kiro/steering/ files and restructure into Power format:
+
+1. Create POWER.md with:
+   - Frontmatter: name, displayName, description, keywords (activation triggers), author
+   - Onboarding section: setup validation steps, prerequisite checks
+   - Core principles: non-negotiable rules extracted from core-principles.md
+   - "When to Load Steering Files" section: map scenarios to steering/ files
+
+2. Move/adapt steering modules into steering/ directory:
+   - quick-reference.md → steering/quick-reference.md
+   - On-demand modules → steering/<topic>.md
+
+3. Add hooks if the project has mechanical compliance steps:
+   - Build triggers (file change → run build/generators)
+   - Validation triggers (pre-PR → run checks)
+
+4. Choose keywords carefully - these determine when Kiro activates the Power:
+   - Project name and common aliases
+   - Key technologies (framework names, tools)
+   - Common task words (deploy, test, migrate, etc.)
+
+5. Test locally: Kiro IDE → Powers panel → Add Custom Power → Import from folder
+
+6. Publish: Push to GitHub repository for community installation
+
+Target structure:
+<project-name>/
+├── POWER.md
+├── steering/
+│   ├── quick-reference.md
+│   └── <topic-modules>.md
+└── hooks/ (optional)
+    └── <automation>.kiro.hook
 ```
 
 ## Usage Notes
