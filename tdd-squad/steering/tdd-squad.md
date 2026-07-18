@@ -24,8 +24,9 @@ Invoke `red-contract` agent with:
 
 **Red-Test round:**
 Invoke `red-test` agent with:
-- **Context:** Current use case + contract + path to existing test files
-- **Task:** "Review the use case and existing tests. Write ONE new failing test, or respond COMPLETE if all behaviors are tested."
+- **Context:** Current use case text + contract + path to existing test files
+- **Task:** "Here is the use case spec and the existing tests. Apply your systematic boundary analysis. Decide: write ONE new failing test, or respond COMPLETE if all spec-derivable behaviors are tested."
+- **CRITICAL:** Do NOT tell Red-Test which test to write next. Do NOT hint at remaining behaviors. Do NOT pre-decide completeness. Do NOT list "already tested behaviors." Red-Test owns this decision autonomously based on its own analysis.
 - **Exit condition:** Response contains "COMPLETE" → move to next use case
 
 **Quality gate (orchestrator):**
