@@ -56,6 +56,12 @@ Invoke `blue-clean` agent with:
 - **Task:** "Refactor for clean code and architecture. Tests must still pass."
 - **DO NOT pass:** requirements.md, usecases.md, or contract files
 
+**Git commit (orchestrator):**
+After Blue-Clean completes and tests pass, commit all changes:
+- Message format: `TDD [UC name] Round N: [one-line summary of what was tested and implemented]`
+- Stage only src/ files (tests + production code)
+- This creates full traceability in git history
+
 **Loop back to Red-Test.**
 
 ### Completion
