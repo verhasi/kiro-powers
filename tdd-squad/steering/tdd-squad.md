@@ -50,6 +50,13 @@ Invoke `blue-clean` agent with:
 ### Completion
 When all use cases have Red-Test signaling COMPLETE, the feature is implemented.
 
+**Human review checkpoint:** After all use cases are complete, present `edge-cases-review.md` to the human. The human decides for each edge case:
+- **Extend spec** → Add to usecases.md, run another TDD loop for it
+- **Drop** → Not needed, remove from review list
+- **Defer** → Track as future enhancement
+
+This ensures no gap between intention and implementation — ambiguity is surfaced, not silently resolved by AI.
+
 ## Context Isolation Rules
 
 | Agent | requirements.md | usecases.md | contract | tests | source code |
