@@ -28,6 +28,17 @@ Invoke `red-test` agent with:
 - **Task:** "Review the use case and existing tests. Write ONE new failing test, or respond COMPLETE if all behaviors are tested."
 - **Exit condition:** Response contains "COMPLETE" → move to next use case
 
+**Quality gate (orchestrator):**
+After Red-Test completes, verify ALL test methods have the required traceability javadoc:
+```
+/**
+ * Feature: [feature name]
+ * Use Case: [use case name]
+ * Spec: "[exact quote]"
+ */
+```
+If any test is missing traceability, send back to Red-Test with instruction: "Add missing traceability javadoc to all tests that lack it. Every test must have Feature, Use Case, and Spec quote."
+
 **Green round:**
 Invoke `green` agent with:
 - **Context:** Path to test files + source files + type definitions ONLY
