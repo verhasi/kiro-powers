@@ -65,15 +65,82 @@ After Blue-Clean completes and tests pass, commit all changes:
 
 **Loop back to Red-Test.**
 
+### Edge Cases Review (after each use case)
+
+When Red-Test signals COMPLETE for a use case:
+
+1. **Check** if `edge-cases-review-[uc-slug].md` exists for this use case (e.g., `edge-cases-review-uc1-basic-addition.md`)
+2. If yes → **reformat** the file according to `steering/edge-cases-review-format.md` and **present to human**
+3. If no edge cases → proceed to next use case
+
+#### Interaction Model (hybrid)
+
+The orchestrator presents ALL edge cases at once in a readable format, then **stops and waits** for the human to respond. The human can:
+
+- Decide all at once: "ACCEPT 1 (throw exception), REJECT 2, DEFER 3, ESCALATE 4 to team lead"
+- Decide one by one in conversation
+- Ask clarifying questions before deciding
+- Mix decisions and escalations freely
+
+The orchestrator does NOT ask one-by-one interactively — it presents the full picture, then interprets whatever response format the human uses.
+
+**After all decisions are collected**, the orchestrator:
+1. Writes decisions to `usecases.md` (format below)
+2. Deletes the `edge-cases-review-[uc-slug].md` file (decisions are now in usecases.md)
+3. Proceeds with post-decision TDD rounds for ACCEPT cases
+
+**Human decides** for each edge case: ACCEPT / REJECT / DEFER / ESCALATE
+
+**Orchestrator writes decisions back to `usecases.md`** under the relevant use case as a subsection:
+
+```markdown
+### Use Case 1: Basic Addition
+
+(original spec text...)
+
+#### Edge Case Decisions
+
+##### Trailing delimiter (ACCEPT)
+> **From edge-cases-review.md:** "Spec does not define behavior for inputs ending with a delimiter (e.g., '1,2,')"
+> **Possible behaviors:** A) throw exception B) ignore trailing C) treat as zero
+> **Decision:** ACCEPT — throw IllegalArgumentException
+> **Rationale:** Consistent with strict parsing philosophy
+
+##### Whitespace around numbers (REJECT)
+> **From edge-cases-review.md:** "Spec does not define whether ' 1 , 2 ' is valid"
+> **Decision:** REJECT — out of scope, inputs are always well-formed
+> **Rationale:** Spec explicitly shows clean examples, no trimming needed
+
+##### Very large numbers (DEFER)
+> **From edge-cases-review.md:** "Spec does not define upper bound for numbers"
+> **Decision:** DEFER — track for v2
+> **Rationale:** No production requirement yet
+
+##### Unicode delimiters (ESCALATE)
+> **From edge-cases-review.md:** "Custom delimiter syntax may receive unicode characters"
+> **Decision:** ESCALATE to Tech Lead
+> **Rationale:** Internationalization decision beyond developer scope
+```
+
+#### Post-Decision TDD Round
+
+After decisions are written to `usecases.md`:
+
+1. **For each ACCEPT decision:** Run a new TDD loop (Red-Test → Green → Blue-Intent → Blue-Clean) using the accepted edge case as additional spec. Red-Test can now quote the decision text.
+2. **For REJECT:** No action — explicitly documented as out of scope.
+3. **For DEFER:** No action now — remains in usecases.md for future reference.
+4. **For ESCALATE:** **STOP.** Do not proceed to next use case. Wait for escalation resolution. When resolved, update the decision to ACCEPT or REJECT and continue.
+
+Only after all edge cases are resolved (no ESCALATE pending) → proceed to next use case.
+
 ### Completion
-When all use cases have Red-Test signaling COMPLETE, the feature is implemented.
 
-**Human review checkpoint:** After all use cases are complete, present `edge-cases-review.md` to the human. The human decides for each edge case:
-- **Extend spec** → Add to usecases.md, run another TDD loop for it
-- **Drop** → Not needed, remove from review list
-- **Defer** → Track as future enhancement
+When all use cases have:
+- Red-Test signaling COMPLETE
+- All edge cases decided (no pending ESCALATE)
+- All ACCEPT decisions implemented via TDD loops
 
-This ensures no gap between intention and implementation — ambiguity is surfaced, not silently resolved by AI.
+The feature is implemented. No gap between intention and implementation — ambiguity is surfaced, decided by humans, and traced in the spec.
 
 ## Context Isolation Rules
 
